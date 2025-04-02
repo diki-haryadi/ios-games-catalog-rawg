@@ -15,6 +15,9 @@ protocol RemoteDataSourceProtocol: AnyObject {
   func getMeal(by id: String) -> AnyPublisher<MealResponse, Error>
   func getMeals(by category: String) -> AnyPublisher<[MealResponse], Error>
   func searchMeal(by title: String) -> AnyPublisher<[MealResponse], Error>
+  
+  func getGames(page: Int, pageSize: Int, search: String?) -> AnyPublisher<GamesResponse, Error>
+  func getGameDetail(by id: Int) -> AnyPublisher<GameDetailResponse, Error>
 
 }
 
@@ -27,6 +30,53 @@ final class RemoteDataSource: NSObject {
 }
 
 extension RemoteDataSource: RemoteDataSourceProtocol {
+
+  func getGames(
+    page: Int = 1,
+    pageSize: Int = 10,
+    search: String? = nil
+  ) -> AnyPublisher<GamesResponse, Error> {
+    return Future<GamesResponse, Error> { completion in
+      var urlString = Endpoints.Gets.games.url
+      urlString += "&page=\(page)&page_size=\(pageSize)"
+      if let searchQuery = search {
+        urlString += "&search=\(searchQuery)"
+      }
+      
+      if let url = URL(string: urlString) {
+        AF.request(url)
+          .validate()
+          .responseDecodable(of: GamesResponse.self) { response in
+            switch response.result {
+            case .success(let value):
+              completion(.success(value))
+            case .failure:
+              completion(.failure(URLError.invalidResponse))
+            }
+          }
+      }
+    }.eraseToAnyPublisher()
+  }
+  
+  func getGameDetail(
+    by id: Int
+  ) -> AnyPublisher<GameDetailResponse, Error> {
+    return Future<GameDetailResponse, Error> { completion in
+      if let url = URL(string: Endpoints.Gets.gameDetail(id: id).url) {
+        AF.request(url)
+          .validate()
+          .responseDecodable(of: GameDetailResponse.self) { response in
+            switch response.result {
+            case .success(let value):
+              completion(.success(value))
+            case .failure:
+              completion(.failure(URLError.invalidResponse))
+            }
+          }
+      }
+    }.eraseToAnyPublisher()
+  }
+
 
   func getCategories() -> AnyPublisher<[CategoryResponse], Error> {
     return Future<[CategoryResponse], Error> { completion in

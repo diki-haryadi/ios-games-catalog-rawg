@@ -43,9 +43,10 @@ class FavoritePresenter: ObservableObject {
 
   func linkBuilder<Content: View>(
     for meal: MealModel,
+    game: GameModel,
     @ViewBuilder content: () -> Content
   ) -> some View {
-    NavigationLink(destination: router.makeMealView(for: meal)) { content() }
+      NavigationLink(destination: router.makeMealView(for: meal, game: game)) { content() }
   }
 
 }

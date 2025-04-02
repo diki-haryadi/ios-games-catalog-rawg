@@ -11,6 +11,7 @@ import Combine
 protocol SearchUseCase {
 
   func searchMeal(by title: String) -> AnyPublisher<[MealModel], Error>
+  func searchGames(by title: String, page: Int) -> AnyPublisher<[GameModel], Error>
 
 }
 
@@ -24,6 +25,10 @@ class SearchInteractor: SearchUseCase {
 
   func searchMeal(by title: String) -> AnyPublisher<[MealModel], Error> {
     return repository.searchMeal(by: title)
+  }
+
+  func searchGames(by title: String, page: Int) -> AnyPublisher<[GameModel], Error> {
+      return repository.getGames(page: page, pageSize: 10, search: title)
   }
 
 }

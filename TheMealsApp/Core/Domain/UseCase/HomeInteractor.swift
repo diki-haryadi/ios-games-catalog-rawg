@@ -11,6 +11,7 @@ import Combine
 protocol HomeUseCase {
 
   func getCategories() -> AnyPublisher<[CategoryModel], Error>
+  func getGames(page: Int, pageSize: Int, search: String?) -> AnyPublisher<[GameModel], Error>
 
 }
 
@@ -24,6 +25,10 @@ class HomeInteractor: HomeUseCase {
 
   func getCategories() -> AnyPublisher<[CategoryModel], Error> {
     return repository.getCategories()
+  }
+
+  func getGames(page: Int = 1, pageSize: Int = 10, search: String? = nil) -> AnyPublisher<[GameModel], Error> {
+    return repository.getGames(page: page, pageSize: pageSize, search: search)
   }
 
 }

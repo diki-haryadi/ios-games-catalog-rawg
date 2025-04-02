@@ -9,7 +9,9 @@ import Foundation
 
 struct API {
 
-  static let baseUrl = "https://www.themealdb.com/api/json/v1/1/"
+  static let mealBaseUrl = "https://www.themealdb.com/api/json/v1/1/"
+  static let gameBaseUrl = "https://api.rawg.io/api/"
+  static let gameApiKey = "fe9d7ddef6394a068e8f6aa7675aacd6"
 
 }
 
@@ -26,13 +28,17 @@ enum Endpoints {
     case meals
     case meal
     case search
+    case games
+    case gameDetail(id: Int)
 
     public var url: String {
       switch self {
-      case .categories: return "\(API.baseUrl)categories.php"
-      case .meals: return "\(API.baseUrl)filter.php?c="
-      case .meal: return "\(API.baseUrl)lookup.php?i="
-      case .search: return "\(API.baseUrl)search.php?s="
+      case .categories: return "\(API.mealBaseUrl)categories.php"
+      case .meals: return "\(API.mealBaseUrl)filter.php?c="
+      case .meal: return "\(API.mealBaseUrl)lookup.php?i="
+      case .search: return "\(API.mealBaseUrl)search.php?s="
+      case .games: return "\(API.gameBaseUrl)games?key=\(API.gameApiKey)"
+      case .gameDetail(let id): return "\(API.gameBaseUrl)games/\(id)?key=\(API.gameApiKey)"
       }
     }
   }

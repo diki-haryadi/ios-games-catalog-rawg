@@ -12,6 +12,7 @@ protocol DetailUseCase {
 
   func getCategory() -> CategoryModel
   func getMeals() -> AnyPublisher<[MealModel], Error>
+  func getGameDetail() -> AnyPublisher<GameDetailModel, Error>
 
 }
 
@@ -34,6 +35,10 @@ class DetailInteractor: DetailUseCase {
 
   func getMeals() -> AnyPublisher<[MealModel], Error> {
     return repository.getMeals(by: category.title)
+  }
+  
+  func getGameDetail() -> AnyPublisher<GameDetailModel, Error> {
+      return repository.getGameDetail(by: Int(category.id) ?? 0)
   }
 
 }

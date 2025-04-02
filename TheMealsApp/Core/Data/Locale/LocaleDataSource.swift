@@ -26,6 +26,13 @@ protocol LocaleDataSourceProtocol: AnyObject {
   func getFavoriteMeals() -> AnyPublisher<[MealEntity], Error>
   func updateFavoriteMeal(by idMeal: String) -> AnyPublisher<MealEntity, Error>
 
+  func getGame(by id: Int) -> AnyPublisher<GameEntity, Error>
+  func getGames(page: Int, pageSize: Int, search: String?) -> AnyPublisher<[GameEntity], Error>
+  func addGames(from games: [GameEntity]) -> AnyPublisher<Bool, Error>
+  func updateGame(by id: Int, game: GameEntity) -> AnyPublisher<Bool, Error>
+  func getFavoriteGames() -> AnyPublisher<[GameEntity], Error>
+  func updateFavoriteGame(by id: Int) -> AnyPublisher<GameEntity, Error>
+
 }
 
 final class LocaleDataSource: NSObject {
@@ -43,6 +50,127 @@ final class LocaleDataSource: NSObject {
 }
 
 extension LocaleDataSource: LocaleDataSourceProtocol {
+
+  func getGame(by id: Int) -> AnyPublisher<GameEntity, Error> {
+    return Future<GameEntity, Error> { completion in
+      if let realm = self.realm {
+        let games: Results<GameEntity> = {
+          realm.objects(GameEntity.self)
+            .filter("id = %@", id)
+        }()
+
+        guard let game = games.first else {
+          completion(.failure(DatabaseError.requestFailed))
+          return
+        }
+
+        completion(.success(game))
+      } else {
+        completion(.failure(DatabaseError.invalidInstance))
+      }
+    }.eraseToAnyPublisher()
+  }
+
+  func getGames(page: Int = 1, pageSize: Int = 10, search: String? = nil) -> AnyPublisher<[GameEntity], Error> {
+    return Future<[GameEntity], Error> { completion in
+      if let realm = self.realm {
+        var games: Results<GameEntity>
+        if let searchQuery = search {
+          games = realm.objects(GameEntity.self)
+            .filter("title contains[c] %@", searchQuery)
+            .sorted(byKeyPath: "title", ascending: true)
+        } else {
+          games = realm.objects(GameEntity.self)
+            .sorted(byKeyPath: "title", ascending: true)
+        }
+        
+        let startIndex = (page - 1) * pageSize
+        let endIndex = min(startIndex + pageSize, games.count)
+        let paginatedGames = Array(games[startIndex..<endIndex])
+        completion(.success(paginatedGames))
+      } else {
+        completion(.failure(DatabaseError.invalidInstance))
+      }
+    }.eraseToAnyPublisher()
+  }
+
+  func addGames(from games: [GameEntity]) -> AnyPublisher<Bool, Error> {
+    return Future<Bool, Error> { completion in
+      if let realm = self.realm {
+        do {
+          try realm.write {
+            for game in games {
+              realm.add(game, update: .modified)
+            }
+            completion(.success(true))
+          }
+        } catch {
+          completion(.failure(DatabaseError.requestFailed))
+        }
+      } else {
+        completion(.failure(DatabaseError.invalidInstance))
+      }
+    }.eraseToAnyPublisher()
+  }
+
+  func updateGame(by id: Int, game: GameEntity) -> AnyPublisher<Bool, Error> {
+    return Future<Bool, Error> { completion in
+      if let realm = self.realm, let gameEntity = {
+        realm.objects(GameEntity.self).filter("id = %@", id)
+      }().first {
+        do {
+          try realm.write {
+            gameEntity.setValue(game.name, forKey: "title")
+            gameEntity.setValue(game.released, forKey: "released")
+            gameEntity.setValue(game.backgroundImage, forKey: "backgroundImage")
+            gameEntity.setValue(game.rating, forKey: "rating")
+            gameEntity.setValue(game.ratingTop, forKey: "ratingTop")
+            gameEntity.setValue(game.favorite, forKey: "favorite")
+          }
+          completion(.success(true))
+        } catch {
+          completion(.failure(DatabaseError.requestFailed))
+        }
+      } else {
+        completion(.failure(DatabaseError.invalidInstance))
+      }
+    }.eraseToAnyPublisher()
+  }
+
+  func getFavoriteGames() -> AnyPublisher<[GameEntity], Error> {
+    return Future<[GameEntity], Error> { completion in
+      if let realm = self.realm {
+        let gameEntities = {
+          realm.objects(GameEntity.self)
+            .filter("favorite = %@", true)
+            .sorted(byKeyPath: "title", ascending: true)
+        }()
+        completion(.success(gameEntities.toArray(ofType: GameEntity.self)))
+      } else {
+        completion(.failure(DatabaseError.invalidInstance))
+      }
+    }.eraseToAnyPublisher()
+  }
+
+  func updateFavoriteGame(by id: Int) -> AnyPublisher<GameEntity, Error> {
+    return Future<GameEntity, Error> { completion in
+      if let realm = self.realm, let gameEntity = {
+        realm.objects(GameEntity.self).filter("id = %@", id)
+      }().first {
+        do {
+          try realm.write {
+            gameEntity.setValue(!gameEntity.favorite, forKey: "favorite")
+          }
+          completion(.success(gameEntity))
+        } catch {
+          completion(.failure(DatabaseError.requestFailed))
+        }
+      } else {
+        completion(.failure(DatabaseError.invalidInstance))
+      }
+    }.eraseToAnyPublisher()
+  }
+
 
   func getCategories() -> AnyPublisher<[CategoryEntity], Error> {
     return Future<[CategoryEntity], Error> { completion in

@@ -9,10 +9,10 @@ import SwiftUI
 
 class FavoriteRouter {
 
-  func makeMealView(for meal: MealModel) -> some View {
-    let mealUseCase = Injection.init().provideMeal(meal: meal)
-    let presenter = MealPresenter(mealUseCase: mealUseCase)
-    return MealView(presenter: presenter)
+    func makeMealView(for meal: MealModel, game: GameModel) -> some View {
+        let mealUseCase = Injection.init().provideMeal(meal: meal, game: game)
+        let presenter = MealPresenter(mealUseCase: mealUseCase)
+        return MealView(presenter: presenter)
   }
 
 }

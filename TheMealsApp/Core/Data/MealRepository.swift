@@ -16,6 +16,10 @@ protocol MealRepositoryProtocol {
   func searchMeal(by title: String) -> AnyPublisher<[MealModel], Error>
   func getFavoriteMeals() -> AnyPublisher<[MealModel], Error>
   func updateFavoriteMeal(by idMeal: String) -> AnyPublisher<MealModel, Error>
+  
+  func getGames(page: Int, pageSize: Int, search: String?) -> AnyPublisher<[GameModel], Error>
+  func getGameDetail(by id: Int) -> AnyPublisher<GameDetailModel, Error>
+  func searchGame(by title: String) -> AnyPublisher<[GameModel], Error>
 }
 
 final class MealRepository: NSObject {
@@ -37,6 +41,31 @@ final class MealRepository: NSObject {
 }
 
 extension MealRepository: MealRepositoryProtocol {
+  
+  func searchGame(
+    by title: String
+  ) -> AnyPublisher<[GameModel], Error> {
+    return self.getGames(search: title)
+      .eraseToAnyPublisher()
+  }
+  
+  func getGames(
+    page: Int = 1,
+    pageSize: Int = 10,
+    search: String? = nil
+  ) -> AnyPublisher<[GameModel], Error> {
+    return self.remote.getGames(page: page, pageSize: pageSize, search: search)
+      .map { GameMapper.mapGamesResponseToModels(input: $0) }
+      .eraseToAnyPublisher()
+  }
+  
+  func getGameDetail(
+    by id: Int
+  ) -> AnyPublisher<GameDetailModel, Error> {
+    return self.remote.getGameDetail(by: id)
+      .map { GameMapper.mapGameDetailResponseToModel(input: $0) }
+      .eraseToAnyPublisher()
+  }
 
   func getCategories() -> AnyPublisher<[CategoryModel], Error> {
     return self.locale.getCategories()

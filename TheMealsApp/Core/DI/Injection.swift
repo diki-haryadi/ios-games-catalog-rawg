@@ -29,10 +29,12 @@ final class Injection: NSObject {
     return DetailInteractor(repository: repository, category: category)
   }
 
-  func provideMeal(meal: MealModel) -> MealUseCase {
+    func provideMeal(meal: MealModel, game: GameModel? = nil) -> MealUseCase {
     let repository = provideRepository()
-    return MealInteractor(repository: repository, meal: meal)
+        return MealInteractor(repository: repository, meal: meal, game: game)
   }
+  
+  
 
   func provideFavorite() -> FavoriteUseCase {
     let repository = provideRepository()
