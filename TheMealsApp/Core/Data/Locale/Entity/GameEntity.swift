@@ -2,39 +2,56 @@
 //  GameEntity.swift
 //  TheMealsApp
 //
-//  Created by Ben on 29/11/22.
+//  Created on 03/04/25.
 //
 
 import Foundation
 import RealmSwift
 
 class GameEntity: Object {
-  @objc dynamic var id = 0
-  @objc dynamic var slug = ""
-  @objc dynamic var name = ""
-  @objc dynamic var released = ""
-  @objc dynamic var backgroundImage = ""
-  @objc dynamic var rating = 0.0
-  @objc dynamic var ratingTop = 0
-  @objc dynamic var ratingsCount = 0
-  @objc dynamic var metacritic = 0
-  @objc dynamic var playtime = 0
-  @objc dynamic var updated = ""
-  @objc dynamic var gameDescription = ""
-  @objc dynamic var nameOriginal = ""
-  @objc dynamic var tba = false
-  @objc dynamic var screenshotsCount = 0
-  @objc dynamic var moviesCount = 0
-  @objc dynamic var creatorsCount = 0
-  @objc dynamic var achievementsCount = 0
-  @objc dynamic var parentAchievementsCount = 0
-  @objc dynamic var redditUrl = ""
-  @objc dynamic var redditName = ""
-  @objc dynamic var website = ""
-  @objc dynamic var metacriticUrl = ""
-  @objc dynamic var favorite = false
-
-  override static func primaryKey() -> String {
-    return "id"
+  @Persisted(primaryKey: true) var id: Int
+  @Persisted var name: String = ""
+  @Persisted var released: String = ""
+  @Persisted var backgroundImage: String = ""
+  @Persisted var rating: Double = 0.0
+  @Persisted var ratingCount: Int = 0
+  @Persisted var desc: String = ""
+  @Persisted var genres: List<String> = List<String>()
+  @Persisted var platforms: List<String> = List<String>()
+  
+  func toGameModel() -> GameModel {
+    return GameModel(
+      id: id,
+      name: name,
+      released: released,
+      backgroundImage: backgroundImage,
+      rating: rating,
+      ratingCount: ratingCount,
+      description: desc,
+      genres: genres.map { $0 },
+      platforms: platforms.map { $0 },
+      isFavorite: true
+    )
+  }
+  
+  static func fromGameModel(_ model: GameModel) -> GameEntity {
+    let entity = GameEntity()
+    entity.id = model.id
+    entity.name = model.name
+    entity.released = model.released
+    entity.backgroundImage = model.backgroundImage
+    entity.rating = model.rating
+    entity.ratingCount = model.ratingCount
+    entity.desc = model.description
+    
+    let genresList = List<String>()
+    model.genres.forEach { genresList.append($0) }
+    entity.genres = genresList
+    
+    let platformsList = List<String>()
+    model.platforms.forEach { platformsList.append($0) }
+    entity.platforms = platformsList
+    
+    return entity
   }
 }

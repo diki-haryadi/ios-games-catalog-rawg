@@ -1,79 +1,65 @@
 //
-//  GamesResponse.swift
+//  GameResponse.swift
 //  TheMealsApp
+//
+//  Created on 03/04/25.
 //
 
 import Foundation
 
-struct GamesResponse: Codable {
-    let count: Int
-    let next: String?
-    let previous: String?
-    let results: [GameResponse]
+struct GameResponse: Decodable {
+  let id: Int
+  let name: String
+  let released: String?
+  let backgroundImage: String?
+  let rating: Double
+  let ratingsCount: Int
+  let description: String?
+  let genres: [GenreResponse]
+  let platforms: [PlatformWrapper]
+  
+  enum CodingKeys: String, CodingKey {
+    case id
+    case name
+    case released
+    case backgroundImage = "background_image"
+    case rating
+    case ratingsCount = "ratings_count"
+    case description = "description_raw"
+    case genres
+    case platforms
+  }
+  
+  func toGameModel() -> GameModel {
+    return GameModel(
+      id: id,
+      name: name,
+      released: released ?? "Unknown",
+      backgroundImage: backgroundImage ?? "",
+      rating: rating,
+      ratingCount: ratingsCount,
+      description: description ?? "No description available",
+      genres: genres.map { $0.name },
+      platforms: platforms.map { $0.platform.name },
+      isFavorite: false
+    )
+  }
 }
 
-struct GameResponse: Codable {
-    let id: Int
-    let slug: String
-    let name: String
-    let released: String?
-    let backgroundImage: String?
-    let rating: Double
-    let ratingTop: Int
-    let ratingsCount: Int
-    let metacritic: Int?
-    let playtime: Int
-    let updated: String
-    
-    enum CodingKeys: String, CodingKey {
-        case id, slug, name, released
-        case backgroundImage = "background_image"
-        case rating
-        case ratingTop = "rating_top"
-        case ratingsCount = "ratings_count"
-        case metacritic, playtime, updated
-    }
+struct GenreResponse: Decodable {
+  let id: Int
+  let name: String
 }
 
-struct GameDetailResponse: Codable {
-    let id: Int
-    let slug: String
-    let name: String
-    let nameOriginal: String
-    let description: String
-    let metacritic: Int?
-    let released: String?
-    let tba: Bool
-    let backgroundImage: String?
-    let rating: Double
-    let ratingTop: Int
-    let playtime: Int
-    let screenshotsCount: Int
-    let moviesCount: Int
-    let creatorsCount: Int
-    let achievementsCount: Int
-    let parentAchievementsCount: Int
-    let redditUrl: String?
-    let redditName: String?
-    let website: String?
-    let metacriticUrl: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case id, slug, name
-        case nameOriginal = "name_original"
-        case description, metacritic, released, tba
-        case backgroundImage = "background_image"
-        case rating
-        case ratingTop = "rating_top"
-        case playtime
-        case screenshotsCount = "screenshots_count"
-        case moviesCount = "movies_count"
-        case creatorsCount = "creators_count"
-        case achievementsCount = "achievements_count"
-        case parentAchievementsCount = "parent_achievements_count"
-        case redditUrl = "reddit_url"
-        case redditName = "reddit_name"
-        case website
-        case metacriticUrl = "metacritic_url"
-    }
+struct PlatformWrapper: Decodable {
+  let platform: PlatformResponse
+}
+
+struct PlatformResponse: Decodable {
+  let id: Int
+  let name: String
+}
+
+struct GamesListResponse: Decodable {
+  let results: [GameResponse]
 }

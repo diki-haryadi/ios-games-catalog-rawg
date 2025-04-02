@@ -31,7 +31,7 @@ final class Injection: NSObject {
 
     func provideMeal(meal: MealModel, game: GameModel? = nil) -> MealUseCase {
     let repository = provideRepository()
-        return MealInteractor(repository: repository, meal: meal, game: game)
+        return MealInteractor(repository: repository, meal: meal, game: game ?? <#default value#>)
   }
   
   

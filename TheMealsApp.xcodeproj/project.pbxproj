@@ -64,6 +64,7 @@
 		B5FD193A2D9D554000DC56F7 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD19392D9D554000DC56F7 /* GameModel.swift */; };
 		B5FD193B2D9D554000DC56F7 /* GameDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD19382D9D554000DC56F7 /* GameDetailModel.swift */; };
 		B5FD193D2D9D556F00DC56F7 /* GameMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD193C2D9D556F00DC56F7 /* GameMapper.swift */; };
+		B5FD193F2D9DD00900DC56F7 /* GameRespository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD193E2D9DD00100DC56F7 /* GameRespository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -121,6 +122,7 @@
 		B5FD19382D9D554000DC56F7 /* GameDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailModel.swift; sourceTree = "<group>"; };
 		B5FD19392D9D554000DC56F7 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		B5FD193C2D9D556F00DC56F7 /* GameMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMapper.swift; sourceTree = "<group>"; };
+		B5FD193E2D9DD00100DC56F7 /* GameRespository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRespository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -345,6 +347,7 @@
 				2AC96397292CB24F0061B65A /* Locale */,
 				2A9D4545292C8144008FABEB /* Remote */,
 				2A9D454B292C819A008FABEB /* MealRepository.swift */,
+				B5FD193E2D9DD00100DC56F7 /* GameRespository.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -600,6 +603,7 @@
 				2A9D4531292C805D008FABEB /* ContentView.swift in Sources */,
 				2A9D456A292C84C2008FABEB /* CategoryRow.swift in Sources */,
 				2A91C79E2935E061005A9155 /* DetailRouter.swift in Sources */,
+				B5FD193F2D9DD00900DC56F7 /* GameRespository.swift in Sources */,
 				2A91C76E2935DB11005A9155 /* MealEntity.swift in Sources */,
 				B5FD19332D9D54DA00DC56F7 /* GamesResponse.swift in Sources */,
 				2A91C7782935DC8A005A9155 /* FavoriteInteractor.swift in Sources */,
