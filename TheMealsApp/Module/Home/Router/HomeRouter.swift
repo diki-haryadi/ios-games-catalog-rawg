@@ -2,17 +2,17 @@
 //  HomeRouter.swift
 //  TheMealsApp
 //
-//  Created by Gilang Ramadhan on 22/11/22.
+//  Created on 03/04/25.
 //
 
 import SwiftUI
 
 class HomeRouter {
-
-  func makeDetailView(for category: CategoryModel) -> some View {
-    let detailUseCase = Injection.init().provideDetail(category: category)
+  
+  func makeDetailView(for gameId: Int) -> some View {
+    let detailUseCase = Injection.init().provideDetail(gameId: gameId)
     let presenter = DetailPresenter(detailUseCase: detailUseCase)
     return DetailView(presenter: presenter)
   }
-
+  
 }

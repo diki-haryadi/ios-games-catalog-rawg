@@ -1,103 +1,170 @@
 //
-//  File.swift
+//  DetailView.swift
 //  TheMealsApp
 //
-//  Created by Gilang Ramadhan on 22/11/22.
+//  Created on 03/04/25.
 //
 
 import SwiftUI
-import CachedAsyncImage
+import SDWebImageSwiftUI
 
 struct DetailView: View {
+  
   @ObservedObject var presenter: DetailPresenter
-
+  
   var body: some View {
     ZStack {
       if presenter.isLoading {
         loadingIndicator
-      } else if presenter.isLoading {
+      } else if presenter.isError {
         errorIndicator
-      } else {
-        ScrollView(.vertical) {
-          VStack {
-            imageCategory
-            spacer
-            content
-            spacer
-          }.padding()
+      } else if let game = presenter.game {
+        ScrollView(.vertical, showsIndicators: true) {
+          VStack(alignment: .leading, spacing: 16) {
+            headerSection(game)
+            
+            Divider()
+            
+            descriptionSection(game)
+            
+            Divider()
+            
+            detailsSection(game)
+          }
+          .padding()
         }
+      } else {
+        emptyGame
       }
-    }.onAppear {
-      if self.presenter.meals.count == 0 {
-        self.presenter.getMeals()
-      }
-    }.navigationBarTitle(Text(self.presenter.category.title), displayMode: .large)
+    }
+    .navigationBarTitle(
+      Text(presenter.game?.name ?? "Game Detail"),
+      displayMode: .inline
+    )
+    .navigationBarItems(trailing: favoriteButton)
+    .onAppear {
+      self.presenter.getGameDetail()
+    }
+  }
+  
+  var favoriteButton: some View {
+    Button(action: {
+      self.presenter.updateFavoriteStatus()
+    }) {
+      Image(systemName: presenter.isFavorite ? "heart.fill" : "heart")
+        .foregroundColor(presenter.isFavorite ? .red : .gray)
+    }
   }
 }
 
 extension DetailView {
-  var spacer: some View {
-    Spacer()
-  }
-
+  
   var loadingIndicator: some View {
     VStack {
       Text("Loading...")
       ProgressView()
     }
   }
-
+  
   var errorIndicator: some View {
     CustomEmptyView(
       image: "assetSearchNotFound",
       title: presenter.errorMessage
-    ).offset(y: 80)
+    )
   }
-
-  var imageCategory: some View {
-    CachedAsyncImage(url: URL(string: self.presenter.category.image)) { image in
-      image.resizable()
-    } placeholder: {
-      ProgressView()
-    }.scaledToFit().frame(width: 250.0, height: 250.0, alignment: .center)
+  
+  var emptyGame: some View {
+    CustomEmptyView(
+      image: "assetNoData",
+      title: "No game data available"
+    )
   }
-
-  var mealsHorizontal: some View {
-    ScrollView(.horizontal) {
+  
+  func headerSection(_ game: GameModel) -> some View {
+    VStack(alignment: .leading, spacing: 8) {
+      WebImage(url: URL(string: game.backgroundImage))
+        .resizable()
+        .indicator(.activity)
+        .transition(.fade(duration: 0.5))
+        .scaledToFill()
+        .frame(height: 200)
+        .clipped()
+        .cornerRadius(12)
+      
+      Text(game.name)
+        .font(.title)
+        .fontWeight(.bold)
+      
       HStack {
-        ForEach(self.presenter.meals, id: \.id) { meal in
-          ZStack {
-            self.presenter.linkBuilder(for: meal) {
-              MealRow(meal: meal)
-                .frame(width: 150, height: 150)
-            }.buttonStyle(PlainButtonStyle())
+        HStack {
+          Image(systemName: "star.fill")
+            .foregroundColor(.yellow)
+          Text(String(format: "%.1f", game.rating))
+          Text("(\(game.ratingCount))")
+            .foregroundColor(.secondary)
+        }
+        
+        Spacer()
+        
+        Text("Released: \(game.released)")
+          .foregroundColor(.secondary)
+      }
+      .font(.subheadline)
+    }
+  }
+  
+  func descriptionSection(_ game: GameModel) -> some View {
+    VStack(alignment: .leading, spacing: 8) {
+      Text("Description")
+        .font(.headline)
+      
+      Text(game.description)
+        .font(.body)
+        .fixedSize(horizontal: false, vertical: true)
+    }
+  }
+  
+  func detailsSection(_ game: GameModel) -> some View {
+    VStack(alignment: .leading, spacing: 16) {
+      if !game.genres.isEmpty {
+        VStack(alignment: .leading, spacing: 8) {
+          Text("Genres")
+            .font(.headline)
+          
+          ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+              ForEach(game.genres, id: \.self) { genre in
+                Text(genre)
+                  .font(.caption)
+                  .padding(.horizontal, 12)
+                  .padding(.vertical, 6)
+                  .background(Color.gray.opacity(0.2))
+                  .cornerRadius(16)
+              }
+            }
           }
         }
       }
-    }
-  }
-
-  var description: some View {
-    Text(self.presenter.category.description)
-      .font(.system(size: 15))
-  }
-
-  func headerTitle(_ title: String) -> some View {
-    return Text(title)
-      .font(.headline)
-  }
-
-  var content: some View {
-    VStack(alignment: .leading, spacing: 0) {
-      if !presenter.meals.isEmpty {
-        headerTitle("Meals from \(self.presenter.category.title)")
-          .padding(.bottom)
-        mealsHorizontal
+      
+      if !game.platforms.isEmpty {
+        VStack(alignment: .leading, spacing: 8) {
+          Text("Platforms")
+            .font(.headline)
+          
+          ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+              ForEach(game.platforms, id: \.self) { platform in
+                Text(platform)
+                  .font(.caption)
+                  .padding(.horizontal, 12)
+                  .padding(.vertical, 6)
+                  .background(Color.gray.opacity(0.2))
+                  .cornerRadius(16)
+              }
+            }
+          }
+        }
       }
-      spacer
-      headerTitle("Description")
-        .padding([.top, .bottom])
-      description
     }
   }
 }

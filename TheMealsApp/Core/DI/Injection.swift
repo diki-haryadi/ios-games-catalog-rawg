@@ -3,6 +3,7 @@
 //  TheMealsApp
 //
 //  Created by Gilang Ramadhan on 22/11/22.
+//  Updated on 03/04/25.
 //
 
 import Foundation
@@ -10,13 +11,13 @@ import RealmSwift
 
 final class Injection: NSObject {
 
-  private func provideRepository() -> MealRepositoryProtocol {
+  private func provideRepository() -> GameRepositoryProtocol {
     let realm = try? Realm()
 
-    let locale: LocaleDataSource = LocaleDataSource.sharedInstance(realm)
-    let remote: RemoteDataSource = RemoteDataSource.sharedInstance
+    let locale: LocaleGameDataSource = LocaleGameDataSource.sharedInstance(realm)
+    let remote: RemoteGameDataSource = RemoteGameDataSource.sharedInstance
 
-    return MealRepository.sharedInstance(locale, remote)
+    return GameRepository.sharedInstance(locale, remote)
   }
 
   func provideHome() -> HomeUseCase {
@@ -24,21 +25,9 @@ final class Injection: NSObject {
     return HomeInteractor(repository: repository)
   }
 
-  func provideDetail(category: CategoryModel) -> DetailUseCase {
+  func provideDetail(gameId: Int) -> DetailUseCase {
     let repository = provideRepository()
-    return DetailInteractor(repository: repository, category: category)
-  }
-
-    func provideMeal(meal: MealModel, game: GameModel? = nil) -> MealUseCase {
-    let repository = provideRepository()
-        return MealInteractor(repository: repository, meal: meal, game: game ?? <#default value#>)
-  }
-  
-  
-
-  func provideFavorite() -> FavoriteUseCase {
-    let repository = provideRepository()
-    return FavoriteInteractor(repository: repository)
+    return DetailInteractor(repository: repository, gameId: gameId)
   }
 
   func provideSearch() -> SearchUseCase {
@@ -46,4 +35,8 @@ final class Injection: NSObject {
     return SearchInteractor(repository: repository)
   }
 
+  func provideFavorite() -> FavoriteUseCase {
+    let repository = provideRepository()
+    return FavoriteInteractor(repository: repository)
+  }
 }

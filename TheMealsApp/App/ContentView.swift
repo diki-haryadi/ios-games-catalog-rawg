@@ -2,35 +2,60 @@
 //  ContentView.swift
 //  TheMealsApp
 //
-//  Created by Gilang Ramadhan on 22/11/22.
+//  Created on 03/04/25.
 //
 
 import SwiftUI
 
 struct ContentView: View {
-  @EnvironmentObject var homePresenter: HomePresenter
-  @EnvironmentObject var favoritePresenter: FavoritePresenter
-  @EnvironmentObject var searchPresenter: SearchPresenter
-
+  
+  @EnvironmentObject var appState: AppState
+  
   var body: some View {
     TabView {
-      NavigationStack {
-        HomeView(presenter: homePresenter)
-      }.tabItem {
-        TabItem(imageName: "house", title: "Home")
+      NavigationView {
+        HomeView(
+          presenter: HomePresenter(
+            homeUseCase: Injection.init().provideHome()
+          )
+        )
       }
-
-      NavigationStack {
-        SearchView(presenter: searchPresenter)
-      }.tabItem {
-        TabItem(imageName: "magnifyingglass", title: "Search")
+      .tabItem {
+        Image(systemName: "gamecontroller")
+        Text("Games")
       }
-
-      NavigationStack {
-        FavoriteView(presenter: favoritePresenter)
-      }.tabItem {
-        TabItem(imageName: "heart", title: "Favorite")
+      
+      NavigationView {
+        SearchView(
+          presenter: SearchPresenter(
+            searchUseCase: Injection.init().provideSearch()
+          )
+        )
+      }
+      .tabItem {
+        Image(systemName: "magnifyingglass")
+        Text("Search")
+      }
+      
+      NavigationView {
+        FavoriteView(
+          presenter: FavoritePresenter(
+            favoriteUseCase: Injection.init().provideFavorite()
+          )
+        )
+      }
+      .tabItem {
+        Image(systemName: "heart")
+        Text("Favorites")
       }
     }
+    .accentColor(.red)
   }
+}
+
+class AppState: ObservableObject {
+  @Published var selectedTab: Int = 0
+  @Published var needsRefreshFavorites: Bool = false
+  
+  static let shared = AppState()
 }

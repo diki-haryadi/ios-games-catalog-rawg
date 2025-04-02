@@ -2,32 +2,31 @@
 //  DetailPresenter.swift
 //  TheMealsApp
 //
-//  Created by Gilang Ramadhan on 22/11/22.
+//  Created on 03/04/25.
 //
 
 import SwiftUI
 import Combine
 
 class DetailPresenter: ObservableObject {
-
+  
   private var cancellables: Set<AnyCancellable> = []
-  private let router = DetailRouter()
   private let detailUseCase: DetailUseCase
-
-  @Published var meals: [MealModel] = []
-  @Published var category: CategoryModel
+  
+  @Published var game: GameModel?
   @Published var errorMessage: String = ""
   @Published var isLoading: Bool = false
   @Published var isError: Bool = false
-
+  @Published var isFavorite: Bool = false
+  
   init(detailUseCase: DetailUseCase) {
     self.detailUseCase = detailUseCase
-    category = detailUseCase.getCategory()
+    checkIsFavorite()
   }
-
-  func getMeals() {
+  
+  func getGameDetail() {
     isLoading = true
-    detailUseCase.getMeals()
+    detailUseCase.getGameDetail()
       .receive(on: RunLoop.main)
       .sink(receiveCompletion: { completion in
         switch completion {
@@ -38,18 +37,39 @@ class DetailPresenter: ObservableObject {
         case .finished:
           self.isLoading = false
         }
-      }, receiveValue: { meals in
-        self.meals = meals
+      }, receiveValue: { game in
+        self.game = game
       })
       .store(in: &cancellables)
   }
-
-  func linkBuilder<Content: View>(
-    for meal: MealModel,
-    game: GameModel,
-    @ViewBuilder content: () -> Content
-  ) -> some View {
-      NavigationLink(destination: router.makeMealView(for: meal, game: game)) { content() }
+  
+  func checkIsFavorite() {
+    detailUseCase.checkIsFavorite()
+      .receive(on: RunLoop.main)
+      .sink(receiveCompletion: { _ in },
+            receiveValue: { status in
+              self.isFavorite = status
+            })
+      .store(in: &cancellables)
   }
-
+  
+  func updateFavoriteStatus() {
+    if isFavorite {
+      detailUseCase.removeFromFavorite()
+        .receive(on: RunLoop.main)
+        .sink(receiveCompletion: { _ in },
+              receiveValue: { _ in
+                self.isFavorite = false
+              })
+        .store(in: &cancellables)
+    } else {
+      detailUseCase.addToFavorite()
+        .receive(on: RunLoop.main)
+        .sink(receiveCompletion: { _ in },
+              receiveValue: { _ in
+                self.isFavorite = true
+              })
+        .store(in: &cancellables)
+    }
+  }
 }

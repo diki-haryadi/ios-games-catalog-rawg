@@ -39,27 +39,9 @@ extension GameRepository: GameRepositoryProtocol {
   
   func getGames() -> AnyPublisher<[GameModel], Error> {
     return self.remote.getGames()
-      .map { $0.map { game in
-        var newGame = game
-        self.locale.checkIsFavorite(id: game.id)
-          .sink(receiveCompletion: { _ in },
-                receiveValue: { isFavorite in
-            newGame = GameModel(
-              id: game.id,
-              name: game.name,
-              released: game.released,
-              backgroundImage: game.backgroundImage,
-              rating: game.rating,
-              ratingCount: game.ratingCount,
-              description: game.description,
-              genres: game.genres,
-              platforms: game.platforms,
-              isFavorite: isFavorite
-            )
-          })
-          .cancel()
-        return newGame
-      }}
+      .flatMap { games -> AnyPublisher<[GameModel], Error> in
+        return self.addFavoriteStatusToGames(games)
+      }
       .eraseToAnyPublisher()
   }
   
@@ -88,27 +70,9 @@ extension GameRepository: GameRepositoryProtocol {
   
   func searchGames(query: String) -> AnyPublisher<[GameModel], Error> {
     return self.remote.searchGames(query: query)
-      .map { $0.map { game in
-        var newGame = game
-        self.locale.checkIsFavorite(id: game.id)
-          .sink(receiveCompletion: { _ in },
-                receiveValue: { isFavorite in
-            newGame = GameModel(
-              id: game.id,
-              name: game.name,
-              released: game.released,
-              backgroundImage: game.backgroundImage,
-              rating: game.rating,
-              ratingCount: game.ratingCount,
-              description: game.description,
-              genres: game.genres,
-              platforms: game.platforms,
-              isFavorite: isFavorite
-            )
-          })
-          .cancel()
-        return newGame
-      }}
+      .flatMap { games -> AnyPublisher<[GameModel], Error> in
+        return self.addFavoriteStatusToGames(games)
+      }
       .eraseToAnyPublisher()
   }
   
@@ -129,6 +93,35 @@ extension GameRepository: GameRepositoryProtocol {
   
   func checkIsFavorite(id: Int) -> AnyPublisher<Bool, Error> {
     return self.locale.checkIsFavorite(id: id)
+      .eraseToAnyPublisher()
+  }
+  
+  // Helper method to add favorite status to a list of games
+  private func addFavoriteStatusToGames(_ games: [GameModel]) -> AnyPublisher<[GameModel], Error> {
+    // Create a publisher for each game to check if it's a favorite
+    let publishers = games.map { game in
+      self.locale.checkIsFavorite(id: game.id)
+        .map { isFavorite in
+          // Return a new GameModel with updated favorite status
+          return GameModel(
+            id: game.id,
+            name: game.name,
+            released: game.released,
+            backgroundImage: game.backgroundImage,
+            rating: game.rating,
+            ratingCount: game.ratingCount,
+            description: game.description,
+            genres: game.genres,
+            platforms: game.platforms,
+            isFavorite: isFavorite
+          )
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    // Combine all publishers into a single publisher
+    return Publishers.MergeMany(publishers)
+      .collect()
       .eraseToAnyPublisher()
   }
 }

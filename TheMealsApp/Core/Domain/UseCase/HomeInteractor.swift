@@ -1,34 +1,26 @@
 //
-//  HomeInteractor.swift
+//  HomeUseCase.swift
 //  TheMealsApp
 //
-//  Created by Gilang Ramadhan on 22/11/22.
+//  Created on 03/04/25.
 //
 
 import Foundation
 import Combine
 
 protocol HomeUseCase {
-
-  func getCategories() -> AnyPublisher<[CategoryModel], Error>
-  func getGames(page: Int, pageSize: Int, search: String?) -> AnyPublisher<[GameModel], Error>
-
+  func getGames() -> AnyPublisher<[GameModel], Error>
 }
 
 class HomeInteractor: HomeUseCase {
-
-  private let repository: MealRepositoryProtocol
-
-  required init(repository: MealRepositoryProtocol) {
+  
+  private let repository: GameRepositoryProtocol
+  
+  required init(repository: GameRepositoryProtocol) {
     self.repository = repository
   }
-
-  func getCategories() -> AnyPublisher<[CategoryModel], Error> {
-    return repository.getCategories()
+  
+  func getGames() -> AnyPublisher<[GameModel], Error> {
+    return repository.getGames()
   }
-
-  func getGames(page: Int = 1, pageSize: Int = 10, search: String? = nil) -> AnyPublisher<[GameModel], Error> {
-    return repository.getGames(page: page, pageSize: pageSize, search: search)
-  }
-
 }

@@ -124,8 +124,8 @@ extension LocaleDataSource: LocaleDataSourceProtocol {
             gameEntity.setValue(game.released, forKey: "released")
             gameEntity.setValue(game.backgroundImage, forKey: "backgroundImage")
             gameEntity.setValue(game.rating, forKey: "rating")
-            gameEntity.setValue(game.ratingTop, forKey: "ratingTop")
-            gameEntity.setValue(game.favorite, forKey: "favorite")
+//            gameEntity.setValue(game.ratingTop, forKey: "ratingTop")
+//            gameEntity.setValue(game.favorite, forKey: "favorite")
           }
           completion(.success(true))
         } catch {
@@ -159,7 +159,7 @@ extension LocaleDataSource: LocaleDataSourceProtocol {
       }().first {
         do {
           try realm.write {
-            gameEntity.setValue(!gameEntity.favorite, forKey: "favorite")
+//            gameEntity.setValue(!gameEntity.favorite, forKey: "favorite")
           }
           completion(.success(gameEntity))
         } catch {

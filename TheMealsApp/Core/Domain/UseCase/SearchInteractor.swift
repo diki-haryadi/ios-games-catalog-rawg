@@ -1,34 +1,26 @@
 //
-//  SearchInteractor.swift
+//  SearchUseCase.swift
 //  TheMealsApp
 //
-//  Created by Gilang Ramadhan on 29/11/22.
+//  Created on 03/04/25.
 //
 
 import Foundation
 import Combine
 
 protocol SearchUseCase {
-
-  func searchMeal(by title: String) -> AnyPublisher<[MealModel], Error>
-  func searchGames(by title: String, page: Int) -> AnyPublisher<[GameModel], Error>
-
+  func searchGames(query: String) -> AnyPublisher<[GameModel], Error>
 }
 
 class SearchInteractor: SearchUseCase {
-
-  private let repository: MealRepositoryProtocol
-
-  required init(repository: MealRepositoryProtocol) {
+  
+  private let repository: GameRepositoryProtocol
+  
+  required init(repository: GameRepositoryProtocol) {
     self.repository = repository
   }
-
-  func searchMeal(by title: String) -> AnyPublisher<[MealModel], Error> {
-    return repository.searchMeal(by: title)
+  
+  func searchGames(query: String) -> AnyPublisher<[GameModel], Error> {
+    return repository.searchGames(query: query)
   }
-
-  func searchGames(by title: String, page: Int) -> AnyPublisher<[GameModel], Error> {
-      return repository.getGames(page: page, pageSize: 10, search: title)
-  }
-
 }

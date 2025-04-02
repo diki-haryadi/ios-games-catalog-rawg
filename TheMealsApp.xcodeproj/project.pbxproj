@@ -65,6 +65,10 @@
 		B5FD193B2D9D554000DC56F7 /* GameDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD19382D9D554000DC56F7 /* GameDetailModel.swift */; };
 		B5FD193D2D9D556F00DC56F7 /* GameMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD193C2D9D556F00DC56F7 /* GameMapper.swift */; };
 		B5FD193F2D9DD00900DC56F7 /* GameRespository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD193E2D9DD00100DC56F7 /* GameRespository.swift */; };
+		B5FD19412D9DD0EA00DC56F7 /* LocaleGameDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD19402D9DD0E600DC56F7 /* LocaleGameDataSource.swift */; };
+		B5FD19432D9DD11A00DC56F7 /* RemoteGameDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD19422D9DD11800DC56F7 /* RemoteGameDataSource.swift */; };
+		B5FD19462D9DD36800DC56F7 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = B5FD19452D9DD36800DC56F7 /* SDWebImageSwiftUI */; };
+		B5FD19482D9DDFC400DC56F7 /* GameDetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD19472D9DDFBF00DC56F7 /* GameDetailResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -123,6 +127,9 @@
 		B5FD19392D9D554000DC56F7 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		B5FD193C2D9D556F00DC56F7 /* GameMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMapper.swift; sourceTree = "<group>"; };
 		B5FD193E2D9DD00100DC56F7 /* GameRespository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRespository.swift; sourceTree = "<group>"; };
+		B5FD19402D9DD0E600DC56F7 /* LocaleGameDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleGameDataSource.swift; sourceTree = "<group>"; };
+		B5FD19422D9DD11800DC56F7 /* RemoteGameDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteGameDataSource.swift; sourceTree = "<group>"; };
+		B5FD19472D9DDFBF00DC56F7 /* GameDetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5FD19462D9DD36800DC56F7 /* SDWebImageSwiftUI in Frameworks */,
 				2AC96396292CB18A0061B65A /* RealmSwift in Frameworks */,
 				2AC9639F292CB8270061B65A /* CachedAsyncImage in Frameworks */,
 				2AC96394292CB18A0061B65A /* Realm in Frameworks */,
@@ -383,6 +391,7 @@
 		2A9D4545292C8144008FABEB /* Remote */ = {
 			isa = PBXGroup;
 			children = (
+				B5FD19422D9DD11800DC56F7 /* RemoteGameDataSource.swift */,
 				2A9D4546292C814E008FABEB /* Response */,
 				2A9D4549292C817B008FABEB /* RemoteDataSource.swift */,
 			);
@@ -392,6 +401,7 @@
 		2A9D4546292C814E008FABEB /* Response */ = {
 			isa = PBXGroup;
 			children = (
+				B5FD19472D9DDFBF00DC56F7 /* GameDetailResponse.swift */,
 				2A9D4547292C8162008FABEB /* CategoriesResponse.swift */,
 				2A91C7712935DB41005A9155 /* MealsResponse.swift */,
 				B5FD19322D9D54DA00DC56F7 /* GamesResponse.swift */,
@@ -496,6 +506,7 @@
 		2AC96397292CB24F0061B65A /* Locale */ = {
 			isa = PBXGroup;
 			children = (
+				B5FD19402D9DD0E600DC56F7 /* LocaleGameDataSource.swift */,
 				2AC9639C292CB27B0061B65A /* Entity */,
 				2AC96398292CB25E0061B65A /* LocaleDataSource.swift */,
 			);
@@ -534,6 +545,7 @@
 				2AC96393292CB18A0061B65A /* Realm */,
 				2AC96395292CB18A0061B65A /* RealmSwift */,
 				2AC9639E292CB8270061B65A /* CachedAsyncImage */,
+				B5FD19452D9DD36800DC56F7 /* SDWebImageSwiftUI */,
 			);
 			productName = TheMealsApp;
 			productReference = 2A9D452B292C805D008FABEB /* TheMealsApp.app */;
@@ -567,6 +579,7 @@
 				2A9276AE292CAA7B00C30767 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				2AC96392292CB18A0061B65A /* XCRemoteSwiftPackageReference "realm-swift" */,
 				2AC9639D292CB8270061B65A /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
+				B5FD19442D9DD36800DC56F7 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = 2A9D452C292C805D008FABEB /* Products */;
 			projectDirPath = "";
@@ -601,6 +614,7 @@
 				2A9D454A292C817B008FABEB /* RemoteDataSource.swift in Sources */,
 				2A91C7952935DEDB005A9155 /* MealPresenter.swift in Sources */,
 				2A9D4531292C805D008FABEB /* ContentView.swift in Sources */,
+				B5FD19482D9DDFC400DC56F7 /* GameDetailResponse.swift in Sources */,
 				2A9D456A292C84C2008FABEB /* CategoryRow.swift in Sources */,
 				2A91C79E2935E061005A9155 /* DetailRouter.swift in Sources */,
 				B5FD193F2D9DD00900DC56F7 /* GameRespository.swift in Sources */,
@@ -616,6 +630,7 @@
 				2A9D4561292C82A2008FABEB /* Color+Ext.swift in Sources */,
 				B5FD193A2D9D554000DC56F7 /* GameModel.swift in Sources */,
 				B5FD193B2D9D554000DC56F7 /* GameDetailModel.swift in Sources */,
+				B5FD19412D9DD0EA00DC56F7 /* LocaleGameDataSource.swift in Sources */,
 				2A9D4556292C8225008FABEB /* DetailInteractor.swift in Sources */,
 				2A9D456C292C8577008FABEB /* HomeRouter.swift in Sources */,
 				2A91C77C2935DCB6005A9155 /* SearchInteractor.swift in Sources */,
@@ -631,6 +646,7 @@
 				2A91C7972935DEF3005A9155 /* MealView.swift in Sources */,
 				2A91C77E2935DCFA005A9155 /* MealMapper.swift in Sources */,
 				2A91C7AD2935FE79005A9155 /* TabItem.swift in Sources */,
+				B5FD19432D9DD11A00DC56F7 /* RemoteGameDataSource.swift in Sources */,
 				2A91C7742935DC3E005A9155 /* MealModel.swift in Sources */,
 				2A9D455F292C828E008FABEB /* CustomeError+Ext.swift in Sources */,
 				2A9D4551292C81DD008FABEB /* CategoryModel.swift in Sources */,
@@ -872,6 +888,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		B5FD19442D9DD36800DC56F7 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -894,6 +918,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2AC9639D292CB8270061B65A /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
 			productName = CachedAsyncImage;
+		};
+		B5FD19452D9DD36800DC56F7 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B5FD19442D9DD36800DC56F7 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -1,44 +1,51 @@
 //
-//  DetailInteractor.swift
+//  DetailUseCase.swift
 //  TheMealsApp
 //
-//  Created by Gilang Ramadhan on 22/11/22.
+//  Created on 03/04/25.
 //
 
 import Foundation
 import Combine
 
 protocol DetailUseCase {
-
-  func getCategory() -> CategoryModel
-  func getMeals() -> AnyPublisher<[MealModel], Error>
-  func getGameDetail() -> AnyPublisher<GameDetailModel, Error>
-
+  func getGameDetail() -> AnyPublisher<GameModel, Error>
+  func addToFavorite() -> AnyPublisher<Bool, Error>
+  func removeFromFavorite() -> AnyPublisher<Bool, Error>
+  func checkIsFavorite() -> AnyPublisher<Bool, Error>
+  func getGameId() -> Int
 }
 
 class DetailInteractor: DetailUseCase {
-
-  private let repository: MealRepositoryProtocol
-  private let category: CategoryModel
-
-  required init(
-    repository: MealRepositoryProtocol,
-    category: CategoryModel
-  ) {
+  private let repository: GameRepositoryProtocol
+  private let gameId: Int
+  
+  required init(repository: GameRepositoryProtocol, gameId: Int) {
     self.repository = repository
-    self.category = category
-  }
-
-  func getCategory() -> CategoryModel {
-    return category
-  }
-
-  func getMeals() -> AnyPublisher<[MealModel], Error> {
-    return repository.getMeals(by: category.title)
+    self.gameId = gameId
   }
   
-  func getGameDetail() -> AnyPublisher<GameDetailModel, Error> {
-      return repository.getGameDetail(by: Int(category.id) ?? 0)
+  func getGameDetail() -> AnyPublisher<GameModel, Error> {
+    return repository.getGameDetail(id: gameId)
   }
-
+  
+  func addToFavorite() -> AnyPublisher<Bool, Error> {
+    return repository.getGameDetail(id: gameId)
+      .flatMap { game in
+        self.repository.addToFavorite(game: game)
+      }
+      .eraseToAnyPublisher()
+  }
+  
+  func removeFromFavorite() -> AnyPublisher<Bool, Error> {
+    return repository.removeFromFavorite(id: gameId)
+  }
+  
+  func checkIsFavorite() -> AnyPublisher<Bool, Error> {
+    return repository.checkIsFavorite(id: gameId)
+  }
+  
+  func getGameId() -> Int {
+    return gameId
+  }
 }

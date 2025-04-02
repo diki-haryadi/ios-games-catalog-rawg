@@ -9,10 +9,10 @@ import SwiftUI
 
 class DetailRouter {
 
-func makeMealView(for meal: MealModel, game: GameModel? = nil) -> some View {
-  let mealUseCase = Injection.init().provideMeal(meal: meal, game: game)
-  let presenter = MealPresenter(mealUseCase: mealUseCase)
-  return MealView(presenter: presenter)
-}
+    func makeGameDetailView(for gameId: Int) -> some View {
+       let detailUseCase = Injection.init().provideDetail(gameId: gameId)
+       let presenter = DetailPresenter(detailUseCase: detailUseCase)
+       return DetailView(presenter: presenter)
+     }
 
 }

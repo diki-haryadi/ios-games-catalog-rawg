@@ -13,7 +13,7 @@ protocol MealUseCase {
   func getMeal() -> AnyPublisher<MealModel, Error>
   func getMeal() -> MealModel
   func updateFavoriteMeal() -> AnyPublisher<MealModel, Error>
-  func getGame() -> AnyPublisher<GameDetailModel, Error>
+//  func getGame() -> AnyPublisher<GameDetailModel, Error>
 
 }
 
@@ -45,12 +45,12 @@ class MealInteractor: MealUseCase {
     return repository.updateFavoriteMeal(by: meal.id)
   }
     
-
-  func getGame() -> AnyPublisher<GameDetailModel, Error> {
-      return repository.getGameDetail(by: game.id)
-  }
-    
-  func getGame() -> GameModel {
-        return game
-  }
+//
+//  func getGame() -> AnyPublisher<GameDetailModel, Error> {
+//      return repository.getGameDetail(by: game.id)
+//  }
+//    
+//  func getGame() -> GameModel {
+//        return game
+//  }
 }

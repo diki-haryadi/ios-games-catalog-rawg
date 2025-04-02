@@ -2,30 +2,30 @@
 //  HomePresenter.swift
 //  TheMealsApp
 //
-//  Created by Gilang Ramadhan on 22/11/22.
+//  Created on 03/04/25.
 //
 
 import SwiftUI
 import Combine
 
 class HomePresenter: ObservableObject {
-
+  
   private var cancellables: Set<AnyCancellable> = []
   private let router = HomeRouter()
   private let homeUseCase: HomeUseCase
-
-  @Published var categories: [CategoryModel] = []
+  
+  @Published var games: [GameModel] = []
   @Published var errorMessage: String = ""
   @Published var isLoading: Bool = false
   @Published var isError: Bool = false
-
+  
   init(homeUseCase: HomeUseCase) {
     self.homeUseCase = homeUseCase
   }
-
-  func getCategories() {
+  
+  func getGames() {
     isLoading = true
-    homeUseCase.getCategories()
+    homeUseCase.getGames()
       .receive(on: RunLoop.main)
       .sink(receiveCompletion: { completion in
         switch completion {
@@ -36,17 +36,16 @@ class HomePresenter: ObservableObject {
         case .finished:
           self.isLoading = false
         }
-      }, receiveValue: { categories in
-        self.categories = categories
+      }, receiveValue: { games in
+        self.games = games
       })
       .store(in: &cancellables)
   }
-
+  
   func linkBuilder<Content: View>(
-    for category: CategoryModel,
+    for gameId: Int,
     @ViewBuilder content: () -> Content
   ) -> some View {
-    NavigationLink(destination: router.makeDetailView(for: category)) { content() }
+    NavigationLink(destination: router.makeDetailView(for: gameId)) { content() }
   }
-
 }

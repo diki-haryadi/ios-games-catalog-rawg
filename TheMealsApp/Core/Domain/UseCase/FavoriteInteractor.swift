@@ -1,29 +1,26 @@
 //
-//  FavoriteInteractor.swift
+//  FavoriteUseCase.swift
 //  TheMealsApp
 //
-//  Created by Gilang Ramadhan on 29/11/22.
+//  Created on 03/04/25.
 //
 
 import Foundation
 import Combine
 
 protocol FavoriteUseCase {
-
-  func getFavoriteMeals() -> AnyPublisher<[MealModel], Error>
-
+  func getFavoriteGames() -> AnyPublisher<[GameModel], Error>
 }
 
 class FavoriteInteractor: FavoriteUseCase {
-
-  private let repository: MealRepositoryProtocol
-
-  required init(repository: MealRepositoryProtocol) {
+  
+  private let repository: GameRepositoryProtocol
+  
+  required init(repository: GameRepositoryProtocol) {
     self.repository = repository
   }
-
-  func getFavoriteMeals() -> AnyPublisher<[MealModel], Error> {
-    return repository.getFavoriteMeals()
+  
+  func getFavoriteGames() -> AnyPublisher<[GameModel], Error> {
+    return repository.getFavoriteGames()
   }
-
 }

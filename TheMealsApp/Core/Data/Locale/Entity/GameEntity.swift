@@ -9,15 +9,15 @@ import Foundation
 import RealmSwift
 
 class GameEntity: Object {
-  @Persisted(primaryKey: true) var id: Int
-  @Persisted var name: String = ""
-  @Persisted var released: String = ""
-  @Persisted var backgroundImage: String = ""
-  @Persisted var rating: Double = 0.0
-  @Persisted var ratingCount: Int = 0
-  @Persisted var desc: String = ""
-  @Persisted var genres: List<String> = List<String>()
-  @Persisted var platforms: List<String> = List<String>()
+    @Persisted(primaryKey: true) var id: Int
+      @Persisted var name: String = ""
+      @Persisted var released: String = ""
+      @Persisted var backgroundImage: String = ""
+      @Persisted var rating: Double = 0.0
+      @Persisted var ratingCount: Int = 0
+      @Persisted var desc: String = ""
+      @Persisted var genres: List<String> = List<String>()
+      @Persisted var platforms: List<String> = List<String>()
   
   func toGameModel() -> GameModel {
     return GameModel(
