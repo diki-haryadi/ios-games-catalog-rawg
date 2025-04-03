@@ -69,6 +69,10 @@
 		B5FD19432D9DD11A00DC56F7 /* RemoteGameDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD19422D9DD11800DC56F7 /* RemoteGameDataSource.swift */; };
 		B5FD19462D9DD36800DC56F7 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = B5FD19452D9DD36800DC56F7 /* SDWebImageSwiftUI */; };
 		B5FD19482D9DDFC400DC56F7 /* GameDetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD19472D9DDFBF00DC56F7 /* GameDetailResponse.swift */; };
+		B5FD19652D9E5C3300DC56F7 /* ErrorLoggingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD19642D9E5C3100DC56F7 /* ErrorLoggingDelegate.swift */; };
+		B5FD19672D9E5C9000DC56F7 /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD19662D9E5C8E00DC56F7 /* URLSession+Extension.swift */; };
+		B5FD19692D9E5CAA00DC56F7 /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD19682D9E5CA700DC56F7 /* AppLogger.swift */; };
+		B5FD19862D9EA67100DC56F7 /* ImageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD19852D9EA66E00DC56F7 /* ImageUtility.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -130,6 +134,10 @@
 		B5FD19402D9DD0E600DC56F7 /* LocaleGameDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleGameDataSource.swift; sourceTree = "<group>"; };
 		B5FD19422D9DD11800DC56F7 /* RemoteGameDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteGameDataSource.swift; sourceTree = "<group>"; };
 		B5FD19472D9DDFBF00DC56F7 /* GameDetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailResponse.swift; sourceTree = "<group>"; };
+		B5FD19642D9E5C3100DC56F7 /* ErrorLoggingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLoggingDelegate.swift; sourceTree = "<group>"; };
+		B5FD19662D9E5C8E00DC56F7 /* URLSession+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extension.swift"; sourceTree = "<group>"; };
+		B5FD19682D9E5CA700DC56F7 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
+		B5FD19852D9EA66E00DC56F7 /* ImageUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtility.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +213,7 @@
 		2A91C78F2935DE27005A9155 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B5FD19852D9EA66E00DC56F7 /* ImageUtility.swift */,
 				2A91C7902935DE32005A9155 /* CustomEmptyView.swift */,
 				2A91C7982935DF79005A9155 /* CustomIcon.swift */,
 				2A91C7AC2935FE79005A9155 /* TabItem.swift */,
@@ -380,6 +389,8 @@
 		2A9D4544292C8135008FABEB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B5FD19682D9E5CA700DC56F7 /* AppLogger.swift */,
+				B5FD19642D9E5C3100DC56F7 /* ErrorLoggingDelegate.swift */,
 				2A91C78F2935DE27005A9155 /* View */,
 				2A9D4559292C824F008FABEB /* Extensions */,
 				2A9D4558292C824C008FABEB /* Mapper */,
@@ -436,6 +447,7 @@
 		2A9D4557292C8247008FABEB /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				B5FD19662D9E5C8E00DC56F7 /* URLSession+Extension.swift */,
 				2A9D455A292C8262008FABEB /* APICall.swift */,
 			);
 			path = Network;
@@ -624,6 +636,7 @@
 				2A91C7A42935E251005A9155 /* SearchView.swift in Sources */,
 				2A9D455B292C8262008FABEB /* APICall.swift in Sources */,
 				2A91C7702935DB1D005A9155 /* IngredientEntity.swift in Sources */,
+				B5FD19692D9E5CAA00DC56F7 /* AppLogger.swift in Sources */,
 				2A91C7882935DD8B005A9155 /* FavoritePresenter.swift in Sources */,
 				2A9D4568292C84B2008FABEB /* HomeView.swift in Sources */,
 				2A9D452F292C805D008FABEB /* TheMealsAppApp.swift in Sources */,
@@ -640,6 +653,7 @@
 				B5FD193D2D9D556F00DC56F7 /* GameMapper.swift in Sources */,
 				2A9D4570292C8604008FABEB /* DetailPresenter.swift in Sources */,
 				2A91C7A92935E2CC005A9155 /* SearchRouter.swift in Sources */,
+				B5FD19652D9E5C3300DC56F7 /* ErrorLoggingDelegate.swift in Sources */,
 				B5FD19312D9D3AF400DC56F7 /* GameEntity.swift in Sources */,
 				2A9D454E292C81B1008FABEB /* Injection.swift in Sources */,
 				2A91C79B2935E052005A9155 /* MealRow.swift in Sources */,
@@ -656,8 +670,10 @@
 				2A91C7912935DE32005A9155 /* CustomEmptyView.swift in Sources */,
 				2A91C78E2935DDDB005A9155 /* FavoriteRow.swift in Sources */,
 				2A9D455D292C8272008FABEB /* CategoryMapper.swift in Sources */,
+				B5FD19672D9E5C9000DC56F7 /* URLSession+Extension.swift in Sources */,
 				2A9D454C292C819A008FABEB /* MealRepository.swift in Sources */,
 				2A9D4572292C8620008FABEB /* DetailView.swift in Sources */,
+				B5FD19862D9EA67100DC56F7 /* ImageUtility.swift in Sources */,
 				2A91C7A62935E274005A9155 /* SearchRow.swift in Sources */,
 				2A91C7992935DF79005A9155 /* CustomIcon.swift in Sources */,
 				2A9D4548292C8162008FABEB /* CategoriesResponse.swift in Sources */,

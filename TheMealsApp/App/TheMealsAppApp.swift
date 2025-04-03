@@ -11,7 +11,7 @@ import SwiftUI
 struct TheMealsAppApp: App {
   let homePresenter = HomePresenter(homeUseCase: Injection.init().provideHome())
   let favoritePresenter = FavoritePresenter(favoriteUseCase: Injection.init().provideFavorite())
-  let searchPresenter = SearchPresenter(searchUseCase: Injection.init().provideSearch())
+  let searchPresenter = Injection.init().provideSearchPresenter()
 
   var body: some Scene {
     WindowGroup {

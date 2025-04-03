@@ -37,7 +37,7 @@ enum Endpoints {
       case .meals: return "\(API.mealBaseUrl)filter.php?c="
       case .meal: return "\(API.mealBaseUrl)lookup.php?i="
       case .search: return "\(API.mealBaseUrl)search.php?s="
-      case .games: return "\(API.gameBaseUrl)games?key=\(API.gameApiKey)"
+      case .games: return "\(API.gameBaseUrl)games?key=\(API.gameApiKey)&page_size=20&page=1"
       case .gameDetail(let id): return "\(API.gameBaseUrl)games/\(id)?key=\(API.gameApiKey)"
       }
     }

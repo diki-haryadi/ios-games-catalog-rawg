@@ -25,17 +25,15 @@ struct ContentView: View {
         Text("Games")
       }
       
-      NavigationView {
-        SearchView(
-          presenter: SearchPresenter(
-            searchUseCase: Injection.init().provideSearch()
-          )
-        )
-      }
-      .tabItem {
-        Image(systemName: "magnifyingglass")
-        Text("Search")
-      }
+        NavigationView {
+            SearchView(
+                presenter: Injection.init().provideSearchPresenter()
+            )
+        }
+        .tabItem {
+            Image(systemName: "magnifyingglass")
+            Text("Search")
+        }
       
       NavigationView {
         FavoriteView(

@@ -19,6 +19,7 @@ final class Injection: NSObject {
 
     return GameRepository.sharedInstance(locale, remote)
   }
+    
 
   func provideHome() -> HomeUseCase {
     let repository = provideRepository()
@@ -30,10 +31,16 @@ final class Injection: NSObject {
     return DetailInteractor(repository: repository, gameId: gameId)
   }
 
-  func provideSearch() -> SearchUseCase {
-    let repository = provideRepository()
-    return SearchInteractor(repository: repository)
-  }
+    func provideSearch() -> SearchUseCase {
+           let repository = provideRepository()
+           return SearchInteractor(repository: repository)
+       }
+    
+    func provideSearchPresenter() -> SearchPresenter {
+           let searchUseCase = provideSearch()
+           let repository = provideRepository()
+           return SearchPresenter(searchUseCase: searchUseCase, repository: repository)
+       }
 
   func provideFavorite() -> FavoriteUseCase {
     let repository = provideRepository()

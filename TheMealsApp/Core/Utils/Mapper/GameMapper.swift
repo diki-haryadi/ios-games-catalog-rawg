@@ -13,29 +13,43 @@ final class GameMapper {
     static func mapGameResponsesToDomainModels(
         input gameResponses: [GameResponse]
     ) -> [GameModel] {
-        return gameResponses.map { mapGameResponseToDomainModel(input: $0) }
+        let mappedModels = gameResponses.map { mapGameResponseToDomainModel(input: $0) }
+        
+        // Log mapping results for debugging
+        print("📊 Mapped \(mappedModels.count) games")
+        if let firstGame = mappedModels.first {
+            print("📸 First game mapped image URL: \(firstGame.backgroundImage)")
+            print("📸 Is valid URL: \(firstGame.validBackgroundImageURL != nil ? "Yes" : "No")")
+        }
+        
+        return mappedModels
     }
-    static func mapGamesResponseToModels(
-          input gameResponses: [GameResponse]
-      ) -> [GameModel] {
-          return mapGameResponsesToDomainModels(input: gameResponses)
-      }
-      
     
     static func mapGameResponseToDomainModel(
         input response: GameResponse,
         isFavorite: Bool = false
     ) -> GameModel {
+        // Handle optional arrays with nil coalescing
+        let genreNames = response.genres?.map { $0.name } ?? []
+        let platformNames = response.platforms?.map { $0.platform.name } ?? []
+        
+        // Properly handle the background image URL
+        let backgroundImageURL = response.backgroundImage ?? ""
+        
+        // Log the background image URL for this specific game
+        print("🎮 Mapping game: \(response.name)")
+        print("📸 Original background image: \(response.backgroundImage ?? "nil")")
+        
         return GameModel(
             id: response.id,
             name: response.name,
             released: response.released ?? "Unknown",
-            backgroundImage: response.backgroundImage ?? "",
+            backgroundImage: backgroundImageURL,
             rating: response.rating,
-            ratingCount: response.ratingsCount,
+            ratingCount: response.ratingsCount ?? 0,
             description: response.description ?? "No description available",
-            genres: response.genres.map { $0.name },
-            platforms: response.platforms.map { $0.platform.name },
+            genres: genreNames,
+            platforms: platformNames,
             isFavorite: isFavorite
         )
     }
@@ -44,16 +58,27 @@ final class GameMapper {
         input response: GameDetailResponse,
         isFavorite: Bool = false
     ) -> GameModel {
+        // For non-optional arrays in GameDetailResponse
+        let genreNames = response.genres.map { $0.name }
+        let platformNames = response.platforms.map { $0.platform.name }
+        
+        // Properly handle the background image URL
+        let backgroundImageURL = response.backgroundImage ?? ""
+        
+        // Log the background image URL for this specific game detail
+        print("🎮 Mapping game detail: \(response.name)")
+        print("📸 Original background image: \(response.backgroundImage ?? "nil")")
+        
         return GameModel(
             id: response.id,
             name: response.name,
             released: response.released ?? "Unknown",
-            backgroundImage: response.backgroundImage ?? "",
+            backgroundImage: backgroundImageURL,
             rating: response.rating,
-            ratingCount: response.ratingsCount,
+            ratingCount: response.ratingsCount ?? 0,
             description: response.description ?? "No description available",
-            genres: response.genres.map { $0.name },
-            platforms: response.platforms.map { $0.platform.name },
+            genres: genreNames,
+            platforms: platformNames,
             isFavorite: isFavorite
         )
     }
