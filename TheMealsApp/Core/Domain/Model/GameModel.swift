@@ -7,7 +7,6 @@
 
 import Foundation
 
-// MARK: - Game Model
 struct GameModel: Equatable, Identifiable {
     let id: Int
     let name: String

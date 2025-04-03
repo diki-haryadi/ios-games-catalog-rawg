@@ -7,7 +7,6 @@
 
 import Foundation
 
-// MARK: - Game List Response
 struct GamesListResponse: Decodable {
     let count: Int
     let next: String?
@@ -15,7 +14,6 @@ struct GamesListResponse: Decodable {
     let results: [GameResponse]
 }
 
-// MARK: - Game Detail Response
 struct GameDetailResponse: Decodable {
     let id: Int
     let slug: String
@@ -36,7 +34,6 @@ struct GameDetailResponse: Decodable {
     }
 }
 
-// MARK: - Game Response
 struct GameResponse: Decodable {
     let id: Int
     let slug: String
@@ -87,26 +84,22 @@ struct GameResponse: Decodable {
     }
 }
 
-// MARK: - Genre Response
 struct GenreResponse: Decodable {
     let id: Int
     let name: String
     let slug: String?
 }
 
-// MARK: - Platform Wrapper
 struct PlatformWrapper: Decodable {
     let platform: PlatformResponse
 }
 
-// MARK: - Platform Response
 struct PlatformResponse: Decodable {
     let id: Int
     let name: String
     let slug: String?
 }
 
-// MARK: - Tag Response
 struct TagResponse: Decodable {
     let id: Int
     let name: String
