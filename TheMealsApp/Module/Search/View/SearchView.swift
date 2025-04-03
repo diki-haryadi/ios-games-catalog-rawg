@@ -6,11 +6,21 @@
 //
 
 import SwiftUI
+import Combine
 
 struct SearchView: View {
     @ObservedObject var presenter: SearchPresenter
     @State private var searchText: String = ""
     @State private var isSearching: Bool = false
+    @State private var searchDebounce = PassthroughSubject<String, Never>()
+    @State private var cancellables = Set<AnyCancellable>()
+    
+    // Initialize the view and set up the search debounce functionality
+    init(presenter: SearchPresenter) {
+        self.presenter = presenter
+        // This is needed because we're setting up the debounce in init
+        _searchDebounce = State(initialValue: PassthroughSubject<String, Never>())
+    }
     
     var body: some View {
         VStack {
@@ -25,6 +35,23 @@ struct SearchView: View {
             }
         }
         .navigationTitle("Search Games")
+        .onAppear {
+            // Set up the debounce when the view appears
+            setupSearchDebounce()
+        }
+    }
+    
+    // Set up the debounce functionality for search
+    private func setupSearchDebounce() {
+        searchDebounce
+            .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
+            .removeDuplicates()
+            .filter { !$0.isEmpty }
+            .sink { [weak presenter] searchQuery in
+                isSearching = true
+                presenter?.searchGames(query: searchQuery)
+            }
+            .store(in: &cancellables)
     }
 }
 
@@ -35,6 +62,10 @@ extension SearchView {
                 .foregroundColor(.gray)
             
             TextField("Search games...", text: $searchText)
+                .onChange(of: searchText) { newValue in
+                    // Send the new search text to be debounced
+                    searchDebounce.send(newValue)
+                }
                 .onSubmit {
                     if !searchText.isEmpty {
                         isSearching = true
@@ -59,6 +90,7 @@ extension SearchView {
         .padding(.top, 8)
     }
     
+    // Rest of the code remains unchanged
     var loadingView: some View {
         VStack {
             Spacer()

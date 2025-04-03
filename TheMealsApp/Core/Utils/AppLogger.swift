@@ -38,7 +38,7 @@ class AppLogger {
         let method = request.httpMethod ?? "Unknown"
         let url = request.url?.absoluteString ?? "Unknown URL"
         
-        var logMessage = "📲 \(method) \(url)"
+        var logMessage = " \(method) \(url)"
         
         if let headers = request.allHTTPHeaderFields, !headers.isEmpty {
             logMessage += "\nHeaders: \(headers)"
@@ -56,12 +56,12 @@ class AppLogger {
         let logger = AppLogger.shared.getLogger(category: .network)
         
         if let error = error {
-            logger.error("❌ Network error: \(error.localizedDescription)")
+            logger.error("Network error: \(error.localizedDescription)")
             return
         }
         
         guard let httpResponse = response as? HTTPURLResponse else {
-            logger.error("❌ Invalid response type")
+            logger.error("Invalid response type")
             return
         }
         
@@ -100,19 +100,19 @@ class AppLogger {
         
         switch error {
         case .dataCorrupted(let context):
-            logger.error("❌ \(contextPrefix)Decoding error - corrupted data: \(context.debugDescription)")
+            logger.error("\(contextPrefix)Decoding error - corrupted data: \(context.debugDescription)")
             
         case .keyNotFound(let key, let context):
-            logger.error("❌ \(contextPrefix)Decoding error - key not found: \(key.stringValue), at path: \(context.codingPath.map { $0.stringValue }.joined(separator: "."))")
+            logger.error("\(contextPrefix)Decoding error - key not found: \(key.stringValue), at path: \(context.codingPath.map { $0.stringValue }.joined(separator: "."))")
             
         case .typeMismatch(let type, let context):
-            logger.error("❌ \(contextPrefix)Decoding error - type mismatch: expected \(type), at path: \(context.codingPath.map { $0.stringValue }.joined(separator: "."))")
+            logger.error("\(contextPrefix)Decoding error - type mismatch: expected \(type), at path: \(context.codingPath.map { $0.stringValue }.joined(separator: "."))")
             
         case .valueNotFound(let type, let context):
-            logger.error("❌ \(contextPrefix)Decoding error - value not found: expected \(type), at path: \(context.codingPath.map { $0.stringValue }.joined(separator: "."))")
+            logger.error("\(contextPrefix)Decoding error - value not found: expected \(type), at path: \(context.codingPath.map { $0.stringValue }.joined(separator: "."))")
             
         @unknown default:
-            logger.error("❌ \(contextPrefix)Unknown decoding error: \(error.localizedDescription)")
+            logger.error("\(contextPrefix)Unknown decoding error: \(error.localizedDescription)")
         }
     }
 }

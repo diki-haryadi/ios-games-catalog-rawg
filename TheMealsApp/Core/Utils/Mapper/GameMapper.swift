@@ -16,10 +16,10 @@ final class GameMapper {
         let mappedModels = gameResponses.map { mapGameResponseToDomainModel(input: $0) }
         
         // Log mapping results for debugging
-        print("📊 Mapped \(mappedModels.count) games")
+        print("Mapped \(mappedModels.count) games")
         if let firstGame = mappedModels.first {
-            print("📸 First game mapped image URL: \(firstGame.backgroundImage)")
-            print("📸 Is valid URL: \(firstGame.validBackgroundImageURL != nil ? "Yes" : "No")")
+            print("First game mapped image URL: \(firstGame.backgroundImage)")
+            print("Is valid URL: \(firstGame.validBackgroundImageURL != nil ? "Yes" : "No")")
         }
         
         return mappedModels
@@ -33,18 +33,13 @@ final class GameMapper {
         let genreNames = response.genres?.map { $0.name } ?? []
         let platformNames = response.platforms?.map { $0.platform.name } ?? []
         
-        // Properly handle the background image URL
-        let backgroundImageURL = response.backgroundImage ?? ""
-        
-        // Log the background image URL for this specific game
-        print("🎮 Mapping game: \(response.name)")
-        print("📸 Original background image: \(response.backgroundImage ?? "nil")")
+        print("background image di mapGameResponseToDomainModel: \(response.backgroundImage ?? "nil")")
         
         return GameModel(
             id: response.id,
             name: response.name,
             released: response.released ?? "Unknown",
-            backgroundImage: backgroundImageURL,
+            backgroundImage: response.backgroundImage ?? "https://via.placeholder.com/600x400?text=No+Image",
             rating: response.rating,
             ratingCount: response.ratingsCount ?? 0,
             description: response.description ?? "No description available",
@@ -66,14 +61,14 @@ final class GameMapper {
         let backgroundImageURL = response.backgroundImage ?? ""
         
         // Log the background image URL for this specific game detail
-        print("🎮 Mapping game detail: \(response.name)")
-        print("📸 Original background image: \(response.backgroundImage ?? "nil")")
+        print("Mapping game detail: \(response.name)")
+        print("Original background image: \(response.backgroundImage ?? "nil")")
         
         return GameModel(
             id: response.id,
             name: response.name,
             released: response.released ?? "Unknown",
-            backgroundImage: backgroundImageURL,
+            backgroundImage: response.backgroundImage ?? "https://via.placeholder.com/600x400?text=No+Image",
             rating: response.rating,
             ratingCount: response.ratingsCount ?? 0,
             description: response.description ?? "No description available",
