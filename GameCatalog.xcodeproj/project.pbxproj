@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -135,6 +135,10 @@
 		B5FD19682D9E5CA700DC56F7 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
 		B5FD19852D9EA66E00DC56F7 /* ImageUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtility.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		B5FD19892D9EFA6C00DC56F7 /* About */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = About; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		2A9D4528292C805D008FABEB /* Frameworks */ = {
@@ -325,6 +329,7 @@
 		2A9D453E292C80F2008FABEB /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				B5FD19892D9EFA6C00DC56F7 /* About */,
 				2A9D4540292C8105008FABEB /* Detail */,
 				2A91C7812935DD33005A9155 /* Favorite */,
 				2A9D453F292C80FD008FABEB /* Home */,
@@ -544,6 +549,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				B5FD19892D9EFA6C00DC56F7 /* About */,
 			);
 			name = GameCatalog;
 			packageProductDependencies = (

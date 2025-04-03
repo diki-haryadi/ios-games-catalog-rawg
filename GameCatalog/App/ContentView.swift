@@ -46,18 +46,13 @@ struct ContentView: View {
         Image(systemName: "heart")
         Text("Favorites")
       }
-      NavigationView {
-        FavoriteView(
-          presenter: FavoritePresenter(
-            favoriteUseCase: Injection.init().provideFavorite()
-          )
-        )
-      }
-      .tabItem {
-        Image(systemName: "person.circle")
-        Text("About")
-      }
-      
+        NavigationView {
+                AboutView()
+          }
+          .tabItem {
+            Image(systemName: "person.circle")
+            Text("About")
+          }
     }
     .accentColor(.red)
   }
