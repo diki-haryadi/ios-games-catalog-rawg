@@ -45,6 +45,7 @@
 		2AC96394292CB18A0061B65A /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 2AC96393292CB18A0061B65A /* Realm */; };
 		2AC96396292CB18A0061B65A /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2AC96395292CB18A0061B65A /* RealmSwift */; };
 		2AC9639F292CB8270061B65A /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 2AC9639E292CB8270061B65A /* CachedAsyncImage */; };
+		B5AF15692DAE5C9C00C4C54C /* GameCatalogAbout in Frameworks */ = {isa = PBXBuildFile; productRef = B5AF15682DAE5C9C00C4C54C /* GameCatalogAbout */; };
 		B5FD19312D9D3AF400DC56F7 /* GameEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD19302D9D3AF400DC56F7 /* GameEntity.swift */; };
 		B5FD19332D9D54DA00DC56F7 /* GamesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD19322D9D54DA00DC56F7 /* GamesResponse.swift */; };
 		B5FD193A2D9D554000DC56F7 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FD19392D9D554000DC56F7 /* GameModel.swift */; };
@@ -119,6 +120,7 @@
 			files = (
 				B5FD19462D9DD36800DC56F7 /* SDWebImageSwiftUI in Frameworks */,
 				2AC96396292CB18A0061B65A /* RealmSwift in Frameworks */,
+				B5AF15692DAE5C9C00C4C54C /* GameCatalogAbout in Frameworks */,
 				2AC9639F292CB8270061B65A /* CachedAsyncImage in Frameworks */,
 				2AC96394292CB18A0061B65A /* Realm in Frameworks */,
 				2A9276B0292CAA7B00C30767 /* Alamofire in Frameworks */,
@@ -518,6 +520,7 @@
 				2AC96395292CB18A0061B65A /* RealmSwift */,
 				2AC9639E292CB8270061B65A /* CachedAsyncImage */,
 				B5FD19452D9DD36800DC56F7 /* SDWebImageSwiftUI */,
+				B5AF15682DAE5C9C00C4C54C /* GameCatalogAbout */,
 			);
 			productName = GameCatalog;
 			productReference = 2A9D452B292C805D008FABEB /* GameCatalog.app */;
@@ -552,6 +555,7 @@
 				2AC96392292CB18A0061B65A /* XCRemoteSwiftPackageReference "realm-swift" */,
 				2AC9639D292CB8270061B65A /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 				B5FD19442D9DD36800DC56F7 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				B5AF15672DAE5C9C00C4C54C /* XCRemoteSwiftPackageReference "GameCatalogAbout" */,
 			);
 			productRefGroup = 2A9D452C292C805D008FABEB /* Products */;
 			projectDirPath = "";
@@ -848,6 +852,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		B5AF15672DAE5C9C00C4C54C /* XCRemoteSwiftPackageReference "GameCatalogAbout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/diki-haryadi/GameCatalogAbout.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.0;
+			};
+		};
 		B5FD19442D9DD36800DC56F7 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
@@ -878,6 +890,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2AC9639D292CB8270061B65A /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
 			productName = CachedAsyncImage;
+		};
+		B5AF15682DAE5C9C00C4C54C /* GameCatalogAbout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B5AF15672DAE5C9C00C4C54C /* XCRemoteSwiftPackageReference "GameCatalogAbout" */;
+			productName = GameCatalogAbout;
 		};
 		B5FD19452D9DD36800DC56F7 /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
