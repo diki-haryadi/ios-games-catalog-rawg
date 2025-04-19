@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/diki-haryadi/GameCatalogAbout.git",
       "state" : {
-        "revision" : "1b4ebe2c03d3ede80e441296be3c494607eafe00",
-        "version" : "1.0.0"
+        "revision" : "5f989ab47ca1e5256cfb1b8d436d0cf79521fea6",
+        "version" : "1.0.1"
       }
     },
     {
