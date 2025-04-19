@@ -1,1 +1,7 @@
-[![Codemagic build status](https://api.codemagic.io/apps/67fa54ac6b0ccf98f322778c/ios-project-debug/status_badge.svg)](https://codemagic.io/apps/67fa54ac6b0ccf98f322778c/ios-project-debug/latest_build)
+# Game Catalog Expert
+
+## Continuous Integration / Continuous Deployment
+
+This project uses Codemagic for CI/CD pipeline. The build status can be seen below:
+
+![Codemagic Build Status](build-codemagic.png)
