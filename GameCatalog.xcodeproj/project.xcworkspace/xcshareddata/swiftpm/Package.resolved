@@ -1,5 +1,5 @@
 {
-  "originHash" : "a1a1061106ac97c26bec79dad5ef007c9094b0aaf3572f79960d081c60d51db8",
+  "originHash" : "f423457c471972d05aaf51e839ae6404009c3352979fabc75d660477dc232754",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "78424be314842833c04bc3bef5b72e85fff99204",
         "version" : "5.6.4"
+      }
+    },
+    {
+      "identity" : "gamecatalogabout",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/diki-haryadi/GameCatalogAbout.git",
+      "state" : {
+        "revision" : "5f989ab47ca1e5256cfb1b8d436d0cf79521fea6",
+        "version" : "1.0.1"
       }
     },
     {
