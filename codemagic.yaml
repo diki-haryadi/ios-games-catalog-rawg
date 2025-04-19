@@ -14,7 +14,7 @@ workflows:
           -project "$XCODE_PROJECT" \
           -scheme "$XCODE_SCHEME" \
           -sdk iphonesimulator \
-          -destination 'platform=iOS Simulator,name=iPhone 14 Pro Max,OS=16.2' \
+          -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.2' \
           clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
       - name: Build debug app
         script: |
@@ -43,7 +43,7 @@ workflows:
           -project "$XCODE_PROJECT" \
           -scheme "$XCODE_SCHEME" \
           -sdk iphonesimulator \
-          -destination 'platform=iOS Simulator,name=iPhone 14 Pro Max,OS=16.2' \
+          -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.2' \
           test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
     publishing:
       email:
