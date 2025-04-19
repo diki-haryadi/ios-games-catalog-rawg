@@ -27,3 +27,25 @@ workflows:
       email:
         recipients:
           - dk.harryadi@gmail.com
+          
+  ios-project-test: # new workflow for testing
+    name: iOS Test # workflow name
+    environment:
+      xcode: latest
+      cocoapods: default
+      vars:
+          XCODE_PROJECT: "GameCatalog.xcodeproj" # Isikan nama project Anda.
+          XCODE_SCHEME: "GameCatalogTests" # Test scheme name - adjust if different
+    scripts:
+      - name: Run tests
+        script: |
+          xcodebuild \
+          -project "$XCODE_PROJECT" \
+          -scheme "$XCODE_SCHEME" \
+          -sdk iphonesimulator \
+          -destination 'platform=iOS Simulator,name=iPhone 14 Pro Max,OS=16.2' \
+          test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+    publishing:
+      email:
+        recipients:
+          - dk.harryadi@gmail.com
